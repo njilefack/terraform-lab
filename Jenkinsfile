@@ -1,25 +1,16 @@
 pipeline {   
-  agent {
-    node {
-      label 'master'
-    }  
-  }
+  agent any
   stages {
-    stage('checkout') {
-      steps {
-        checkout scm
-        sh 'docker pull hashicorp/terraform:light'
-      }
-    }
     stage('init') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light init'
+        sh 'terraform init'
       }
     }
     stage('plan') {
       steps {
-        sh 'docker run -w /app -v /root/.aws:/root/.aws -v `pwd`:/app hashicorp/terraform:light plan'
+        sh 'terraform plan'
       }
+/*
     }
     stage('approval') {
       options {
@@ -37,3 +28,4 @@ pipeline {
     }
   }
 }
+*/
